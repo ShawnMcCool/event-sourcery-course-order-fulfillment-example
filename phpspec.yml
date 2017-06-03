@@ -1,0 +1,12 @@
+suites:
+    main:
+        namespace: OrderFulfillment
+        psr4_prefix: OrderFulfillment
+        src_path: src
+extensions:
+  spec\OrderFulfillment\PhpSpec\EventSourcingExtension: ~
+  PhpSpec\Laravel\Extension\LaravelExtension:
+    framework_path: "/vagrant/laravel/bootstrap/app.php"
+formatter.name: pretty
+laravel_extension:
+    testing_environment: 'testing'
