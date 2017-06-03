@@ -2,6 +2,10 @@
 
 use Route, Request, Response;
 
+function test_route($path, callable $f) {
+    Route::get($path, $f);
+}
+
 function get($path, $controller, $method, $name = null) {
     Route::get($path, $controller.'@'.$method)->name($name);
 }
