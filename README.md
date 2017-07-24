@@ -37,7 +37,8 @@ Below are descriptions of the domain events in our systems and the data fields c
 When a customer finds the products that they'd like to purchase and checks out, the order becomes placed. The customer will then wait to get an order confirmation before they can pay. This isn't the model that Amazon.com etc uses. But, it's common in B2B sales. 
 
 * Order ID - Order ID is an identifier for this specific order. No other order will have this ID.
-* Customer ID - Customer ID is an identifier for this specific customer. No other customer will have this ID. 
+* Customer ID - Customer ID is an identifier for this specific customer. No other customer will have this ID.
+* Customer Name - The full name of the customer. 
 * Products - Products is a list of Product IDs that the customer wants to purchase.
 * Total Price - Total Price is the amount of money that must be paid before the order is completed. 
 * Currency - Currency is an identifier for the currency type the order was placed with. 
@@ -76,9 +77,9 @@ Once the order has been completed and our employee has packed and shipped the or
 * Fulfilled By - Fulfilled By is the ID of the employee who fulfilled the order.
 * Fulfilled At - Fulfilled At is the time and date that the order was fulfilled.
 
-**More documentation to come.**
-
 # Routing
+
+**More documentation to come.**
 
 ## Middleware
 
