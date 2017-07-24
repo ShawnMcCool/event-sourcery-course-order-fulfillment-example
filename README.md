@@ -40,7 +40,7 @@ When a customer finds the products that they'd like to purchase and checks out, 
 * Customer ID - Customer ID is an identifier for this specific customer. No other customer will have this ID.
 * Customer Name - The full name of the customer. 
 * Products - Products is a list of Product IDs that the customer wants to purchase.
-* Total Price - Total Price is the amount of money that must be paid before the order is completed. 
+* Total Price - Total Price is the amount of money that must be paid before the order is completed in cents. 
 * Currency - Currency is an identifier for the currency type the order was placed with. 
 * Placed At - Placed At is the time and date of when the customer placed the order.
 
@@ -57,7 +57,7 @@ After an order is placed an employee will check inventory and ensure that the or
 Once the order is confirmed, the customer is free to make payments. It's possible for the customer to make multiple payments with amounts smaller than the total price. However, the order will not be marked as complete until the total amount has been received.
 
 * Order ID - The unique order identifier.
-* Amount - The amount of money that was received. This should be stored in a string format to prevent mathematic operations.
+* Amount - The amount of money that was received in cents.
 * Currency - An identifier for the currency type that was received. 
 * Received At - Received At is the time and date that the payment was received.
 
