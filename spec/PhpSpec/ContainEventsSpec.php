@@ -1,0 +1,40 @@
+<?php namespace spec\OrderFulfillment\PhpSpec;
+
+use OrderFulfillment\EventSourcing\DomainEvents;
+use PhpSpec\Exception\Example\FailureException;
+use PhpSpec\ObjectBehavior;
+
+class ContainEventsSpec extends ObjectBehavior {
+
+    public function it_checks_if_a_collection_contains_a_matching_event() {
+        $events = DomainEvents::make([
+            new EventStub(1, 2, 3)
+        ]);
+
+        expect($events)->shouldContainEvent(
+            new EventStub(1, 2, 3)
+        );
+
+        expect($events)->shouldNotContainEvent(
+            new EventStub(1, 2, 2)
+        );
+    }
+
+    // these tests aren't particularly good, actually test the classes
+    // when you get time
+    public function it_fails_if_a_collection_doesnt_have_a_matching_event() {
+        $events = DomainEvents::make([]);
+
+        expect($events)->shouldNotContainEvent(
+            new EventStub(3, 2, 1)
+        );
+
+        $events = DomainEvents::make([
+            new EventStub(3, 2, 1)
+        ]);
+
+        expect($events)->shouldNotContainEvent(
+            new EventStub(4, 4, 4)
+        );
+    }
+}
