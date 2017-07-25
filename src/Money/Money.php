@@ -19,6 +19,10 @@ class Money {
         return new Money($cents, $currency);
     }
 
+    public function toCents() {
+        return $this->cents;
+    }
+
     public function add(Money $that) {
         if ( ! $this->currency->equals($that->currency)) {
             throw new CurrenciesDontMatch($this->currency, $that->currency);
