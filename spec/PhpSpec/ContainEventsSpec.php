@@ -1,14 +1,13 @@
 <?php namespace spec\OrderFulfillment\PhpSpec;
 
 use OrderFulfillment\EventSourcing\DomainEvents;
-use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\ObjectBehavior;
 
 class ContainEventsSpec extends ObjectBehavior {
 
     public function it_checks_if_a_collection_contains_a_matching_event() {
         $events = DomainEvents::make([
-            new EventStub(1, 2, 3)
+            new EventStub(1, 2, 3),
         ]);
 
         expect($events)->shouldContainEvent(
@@ -30,11 +29,27 @@ class ContainEventsSpec extends ObjectBehavior {
         );
 
         $events = DomainEvents::make([
-            new EventStub(3, 2, 1)
+            new EventStub(3, 2, 1),
         ]);
 
         expect($events)->shouldNotContainEvent(
             new EventStub(4, 4, 4)
+        );
+    }
+
+    public function it_can_check_multiple_events() {
+        $events = DomainEvents::make([
+            new EventStub(1, 2, 3),
+            new EventStub(4, 4, 4)
+        ]);
+
+        expect($events)->shouldContainEvents([
+            new EventStub(1, 2, 3),
+            new EventStub(4, 4, 4)
+        ]);
+
+        expect($events)->shouldNotContainEvent(
+            new EventStub(1, 2, 2)
         );
     }
 }

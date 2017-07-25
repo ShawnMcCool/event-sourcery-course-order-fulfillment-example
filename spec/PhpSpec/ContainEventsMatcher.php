@@ -7,6 +7,12 @@ use OrderFulfillment\EventSourcing\StreamEvents;
 use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\Matcher\Matcher;
 
+function log($text) {
+    $myfile = fopen("/vagrant/laravel/storage/logs/phpspec.log", "a") or die("Unable to open file!");
+    fwrite($myfile, "\n". $text);
+    fclose($myfile);
+}
+
 class ContainEventsMatcher implements Matcher {
 
     /**
@@ -26,6 +32,7 @@ class ContainEventsMatcher implements Matcher {
      * Evaluates positive match.
      *
      * Yes, I know that this is some really hard to understand code.
+     * This is one of the more interesting areas to improve upon
      *
      * @param string $name
      * @param mixed $subject
@@ -35,6 +42,7 @@ class ContainEventsMatcher implements Matcher {
         list($realEvents, $targetEvents) = $this->formatArguments($subject, $arguments);
 
         $notFoundEvents = $this->eventsNotFound($realEvents, $targetEvents);
+
         if ( ! empty($notFoundEvents)) {
             $eventNames = join(', ', array_map(function (DomainEvent $event) {
                 return '<label>' . get_class($event) . '</label>';
@@ -99,7 +107,12 @@ class ContainEventsMatcher implements Matcher {
 
     private function eventIsFound(DomainEvent $targetEvent, DomainEvents $realEvents) {
         $found = $realEvents->filter(function ($realEvent) use ($targetEvent) {
-            return $this->eventsAreEqual($realEvent, $targetEvent);
+            try {
+                $eventsAreEqual = $this->eventsAreEqual($realEvent, $targetEvent);
+            } catch (FailureException $e) {
+                $eventsAreEqual = false;
+            }
+            return $eventsAreEqual;
         });
         return $found->count() != 0;
     }
