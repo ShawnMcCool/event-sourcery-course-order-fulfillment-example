@@ -7,12 +7,6 @@ use OrderFulfillment\EventSourcing\StreamEvents;
 use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\Matcher\Matcher;
 
-function log($text) {
-    $myfile = fopen("/vagrant/laravel/storage/logs/phpspec.log", "a") or die("Unable to open file!");
-    fwrite($myfile, "\n". $text);
-    fclose($myfile);
-}
-
 class ContainEventsMatcher implements Matcher {
 
     /**
