@@ -44,4 +44,8 @@ class Money {
     public function equals(Money $that) {
         return $this->cents == $that->cents && $this->currency == $that->currency;
     }
+
+    public function toString(): string {
+        return $this->currency . ' ' . ($this->cents / 100);
+    }
 }

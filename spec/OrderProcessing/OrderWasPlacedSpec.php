@@ -14,7 +14,7 @@ class OrderWasPlacedSpec extends ObjectBehavior {
     private $customerName = 'customer name';
     private $products = ['product id 1', 'product id 2'];
     private $totalPrice = '1200';
-    private $currency = 'usd';
+    private $currency = 'USD';
     private $placedAt = '2017-01-01 23:21:23';
 
     function let() {

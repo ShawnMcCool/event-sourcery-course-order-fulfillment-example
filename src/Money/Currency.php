@@ -5,7 +5,7 @@ class Currency {
     private $type;
 
     public function __construct($type) {
-        $this->type = $type;
+        $this->type = strtoupper($type);
     }
 
     public function equals(Currency $that) {
