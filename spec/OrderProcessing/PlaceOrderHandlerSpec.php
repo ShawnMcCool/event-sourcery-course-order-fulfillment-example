@@ -1,7 +1,6 @@
 <?php namespace spec\OrderFulfillment\OrderProcessing;
 
 use OrderFulfillment\OrderProcessing\PlaceOrder;
-use OrderFulfillment\OrderProcessing\PlaceOrderHandler;
 use PhpSpec\ObjectBehavior;
 use spec\OrderFulfillment\EventSourcing\TestEventStoreSpy;
 use function spec\OrderFulfillment\PhpSpec\expect;

@@ -77,9 +77,11 @@ Once the order has been completed and our employee has packed and shipped the or
 * Fulfilled By - Fulfilled By is the ID of the employee who fulfilled the order.
 * Fulfilled At - Fulfilled At is the time and date that the order was fulfilled.
 
-# Routing
+# Testing
 
-**More documentation to come.**
+Application testing is done with PhpSpec. Some PhpSpec extensions were made to make testing easier to write and read.
+
+# Routing
 
 ## Middleware
 

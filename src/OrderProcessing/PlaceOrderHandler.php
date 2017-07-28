@@ -13,6 +13,15 @@ class PlaceOrderHandler implements CommandHandler {
     }
 
     public function handle($c) {
-
+        /** @var PlaceOrder $c */
+        $order = Order::place(
+            $c->orderId(),
+            $c->customerId(),
+            $c->customerName(),
+            $c->products(),
+            $c->totalPrice(),
+            $c->placedAt()
+        );
+        $this->events->storeStream($order->flushEvents());
     }
 }

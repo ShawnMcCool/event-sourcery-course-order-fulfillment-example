@@ -52,4 +52,24 @@ class ContainEventsSpec extends ObjectBehavior {
             new EventStub(1, 2, 2)
         );
     }
+
+    public function it_compares_elements_in_arrays() {
+        $events = DomainEvents::make([
+            new EventStub(1, 2, [3, 2, 1]),
+            new EventStub(4, 4, 4)
+        ]);
+
+        expect($events)->shouldContainEvents([
+            new EventStub(1, 2, [3, 2, 1])
+        ]);
+
+        expect($events)->shouldContainEvents([
+            new EventStub(4, 4, 4)
+        ]);
+
+        expect($events)->shouldNotContainEvents([
+            new EventStub(1, 2, [3, 2, 2]),
+            new EventStub(4, 4, 5),
+        ]);
+    }
 }
