@@ -17,13 +17,15 @@
 
         <h3 class="uk-card-title">Your Cart</h3>
 
-        <form class="uk-form-width-large">
+        <form class="uk-form-width-large" method="post" action="/place-order">
             <ul class="uk-list">
                 <li>
                     Product 1 <a href="#">Remove</a>
+                    <input type="hidden" name="products[]" value="product id 1"/>
                 </li>
                 <li>
                     Product 2 <a href="#">Remove</a>
+                    <input type="hidden" name="products[]" value="product id 2"/>
                 </li>
             </ul>
             <input type="submit" value="Place Order"/>

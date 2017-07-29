@@ -10,6 +10,9 @@ group(['fake-customer-session'], function() {
         return view('place-order');
     });
 
+    post('place-order', PlaceOrder::class, 'place');
+    get('thanks-for-your-order', PlaceOrder::class, 'thanks');
+
     test_route('make-payment', function() {
         return view('make-payment');
     });

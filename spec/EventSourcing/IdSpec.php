@@ -20,12 +20,6 @@ class IdSpec extends ObjectBehavior {
         expect((string) $this->getWrappedObject())->toBe('anId');
     }
 
-    function it_throws_if_its_not_a_string() {
-        $this->beConstructedThrough('fromString', [123]);
-        $this->shouldThrow(\InvalidArgumentException::class)
-            ->duringInstantiation();
-    }
-
     function it_compares_ids_by_value() {
         $this->shouldEqualValue(TestId::fromString('anId'));
     }
@@ -35,4 +29,8 @@ class IdSpec extends ObjectBehavior {
             ->during('equals', [TestIdTwo::fromString('anId')]);
     }
 
+    function it_can_generate_new_ids() {
+        $this->beConstructedThrough('generate');
+        $this->shouldNotEqualValue(TestId::generate());
+    }
 }
