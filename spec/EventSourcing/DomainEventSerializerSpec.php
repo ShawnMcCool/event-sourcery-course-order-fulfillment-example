@@ -1,6 +1,5 @@
 <?php namespace spec\OrderFulfillment\EventSourcing;
 
-use OrderFulfillment\EventSourcing\DomainEvent;
 use OrderFulfillment\EventSourcing\DomainEventClassMap;
 use PhpSpec\ObjectBehavior;
 
@@ -27,7 +26,11 @@ class DomainEventSerializerSpec extends ObjectBehavior {
         );
     }
 
-    function it_can_give_the_name_of_an_event_class() {
-        $this->eventNameFor(new TestDomainEvent())->shouldBe('TestDomainEvent');
+    function it_can_give_the_name_from_an_event_class() {
+        $this->eventNameForClass(TestDomainEvent::class)->shouldBe('TestDomainEvent');
+    }
+
+    function it_can_give_the_class_from_an_event_name() {
+        $this->classNameForEvent('TestDomainEvent')->shouldBe(TestDomainEvent::class);
     }
 }

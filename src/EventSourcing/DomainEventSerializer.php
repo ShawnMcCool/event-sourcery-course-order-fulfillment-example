@@ -1,5 +1,7 @@
 <?php namespace OrderFulfillment\EventSourcing;
 
+use spec\OrderFulfillment\EventSourcing\TestDomainEvent;
+
 class DomainEventSerializer {
 
     /** @var DomainEventClassMap */
@@ -14,12 +16,15 @@ class DomainEventSerializer {
     }
 
     public function deserialize(\stdClass $serializedEvent): DomainEvent {
-        $class = $this->eventClasses->classFor($serializedEvent->event_name);
+        $class = $this->eventClasses->classNameForEvent($serializedEvent->event_name);
         return $class::deserialize($serializedEvent->event_data);
     }
 
-    public function eventNameFor(DomainEvent $e): string {
-        $className = explode('\\', get_class($e));
-        return $className[count($className) - 1];
+    public function classNameForEvent($eventName): string {
+        return $this->eventClasses->classNameForEvent($eventName);
+    }
+
+    public function eventNameForClass(string $className): string {
+        return $this->eventClasses->eventNameForClass($className);
     }
 }

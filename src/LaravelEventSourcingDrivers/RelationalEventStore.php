@@ -60,7 +60,7 @@ class RelationalEventStore implements EventStore {
         DB::table($this->table)->insert([
             'stream_id'      => $id->toString(),
             'stream_version' => $version->toInt(),
-            'event_name'     => $this->serializer->eventNameFor($event),
+            'event_name'     => $this->serializer->eventNameForClass(get_class($event)),
             'event_data'     => $this->serializer->serialize($event),
             'raised_at'      => date('Y-m-d H:i:s'),
             'meta_data'      => $metadata,
