@@ -75,11 +75,25 @@ Once the order has been completed and our employee has packed and shipped the or
 * Order ID - The unique order identifier.
 * Tracking Number - Tracking Number is a unique identifier that allows the customer to track the progress of the order's delivery. 
 * Fulfilled By - Fulfilled By is the ID of the employee who fulfilled the order.
-* Fulfilled At - Fulfilled At is the time and date that the order was fulfilled.
+* Fulfilled At - Fulfilled At is the time and date that the order was gfulfilled.
 
 # Testing
 
 Application testing is done with PhpSpec. Some PhpSpec extensions were made to make testing easier to write and read.
+
+# Command Line Tools
+
+Should you use the vagrant virtual machine, you'll be able to use a TMUX setting to get a convenient HUD.
+
+
+
+Try it out with the following:
+
+```
+$ vagrant ssh
+dev :: /vagrant » ./scripts/tmux-queue.sh 
+``` 
+
 
 # Routing
 
