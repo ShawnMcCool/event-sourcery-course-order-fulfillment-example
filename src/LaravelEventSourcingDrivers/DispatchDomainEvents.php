@@ -10,9 +10,10 @@ use OrderFulfillment\EventSourcing\DomainEventSerializer;
 use OrderFulfillment\EventSourcing\EventDispatcher;
 
 class DispatchDomainEvents implements ShouldQueue {
+
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    private $serializedEvents;
+    private $serializedEvents = [];
 
     public function __construct(DomainEvents $events) {
         $eventNames = $events->map(function (DomainEvent $event) {
@@ -23,7 +24,12 @@ class DispatchDomainEvents implements ShouldQueue {
             return $event->serialize();
         })->toArray();
 
-        $this->serializedEvents = array_combine($eventNames, $serializedEvents);
+        for ($i = 0; $i < $events->count(); $i++) {
+            $this->serializedEvents[] = [
+                $eventNames[$i],
+                $serializedEvents[$i]
+            ];
+        }
     }
 
     public function handle(DomainEventSerializer $serializer, EventDispatcher $dispatcher) {
@@ -31,7 +37,7 @@ class DispatchDomainEvents implements ShouldQueue {
         $dispatcher->dispatch($events);
     }
 
-    private function nameOfEvent($class) : string {
+    private function nameOfEvent($class): string {
         $className = explode('\\', get_class($class));
         return $className[count($className) - 1];
     }
@@ -42,10 +48,11 @@ class DispatchDomainEvents implements ShouldQueue {
      */
     private function deserializeEvents(DomainEventSerializer $serializer) {
         $events = [];
-        foreach ($this->serializedEvents as $eventName => $eventData) {
+        foreach ($this->serializedEvents as $serializedEvent) {
+            list($eventName, $eventData) = $serializedEvent;
             $events[] = $serializer->deserialize((object) [
                 'event_name' => $eventName,
-                'event_data' => $eventData
+                'event_data' => $eventData,
             ]);
         }
         return DomainEvents::make($events);
