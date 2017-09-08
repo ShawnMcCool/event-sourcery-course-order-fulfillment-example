@@ -11,6 +11,7 @@
     "require-dev": {
         "mockery/mockery": "0.9.*",
         "phpspec/phpspec": "^3.1",
+	"phpunit/phpunit": "~6.0",
         "benconstable/phpspec-laravel": "^3.0"
     },
     "autoload": {
@@ -26,7 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
+            "Tests\\": "laravel/tests/",
             "spec\\OrderFulfillment\\": "spec/"
         },
         "files": ["spec/PhpSpec/expect.php"]

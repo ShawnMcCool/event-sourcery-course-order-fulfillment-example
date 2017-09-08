@@ -11,23 +11,27 @@ class TestEventStoreSpy implements EventStore {
 
     private $events = [];
 
-    public function storeStream(StreamEvents $events) : void {
+    public function storeStream(StreamEvents $events): void {
         $this->events = array_merge($this->events,
-            $events->map(function(StreamEvent $streamEvent) {
+            $events->map(function (StreamEvent $streamEvent) {
                 return $streamEvent->event();
             })->toArray()
         );
     }
 
-    public function storeEvent(DomainEvent $event) : void {
+    public function storeEvent(DomainEvent $event): void {
         $this->events[] = $event;
     }
 
-    public function allFor(StreamId $id) : DomainEvents {
+    public function getStream(StreamId $id): StreamEvents {
 
     }
 
     public function storedEvents(): DomainEvents {
         return DomainEvents::make($this->events);
+    }
+
+    public function getEvents($take = 0, $skip = 0): DomainEvents {
+
     }
 }

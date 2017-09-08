@@ -1,7 +1,5 @@
 <?php namespace OrderFulfillment\EventSourcing;
 
-use spec\OrderFulfillment\EventSourcing\TestDomainEvent;
-
 class DomainEventSerializer {
 
     /** @var DomainEventClassMap */

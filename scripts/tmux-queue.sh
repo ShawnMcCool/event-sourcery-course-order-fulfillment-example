@@ -2,7 +2,7 @@
 
 tmux source .tmux.conf
 
-tmux new-session -d 'tail -f -n 20 laravel/storage/logs/domain-events.log | less' 
+tmux new-session -d 'tail -f -n 20 laravel/storage/logs/domain-events.log' 
 tmux split-window -h '/usr/bin/zsh'
 tmux select-pane -t 0
 tmux split-window -v './scripts/start-event-dispatch-queue-worker.sh' -n "Domain Event Dispatch Queue"

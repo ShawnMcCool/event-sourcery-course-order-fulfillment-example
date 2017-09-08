@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
             hostname: "dev",
             dbuser: "root",
             dbpasswd: "password",
-            databases: ["development"],
+            databases: ["development", "integration_testing"],
             sites: [
                 {
                     hostname: "app.local",

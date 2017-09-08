@@ -20,4 +20,8 @@ class TestDomainEvent implements DomainEvent {
     public static function deserialize(array $data) : DomainEvent {
         return new TestDomainEvent($data['number']);
     }
+
+    public function number() {
+        return $this->number;
+    }
 }

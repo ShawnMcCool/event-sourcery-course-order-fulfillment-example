@@ -79,7 +79,21 @@ Once the order has been completed and our employee has packed and shipped the or
 
 # Testing
 
-Application testing is done with PhpSpec. Some PhpSpec extensions were made to make testing easier to write and read.
+Unit testing is done with PhpSpec. Some PhpSpec extensions were made to make testing easier to write and read.
+
+To run the unit tests:
+
+```
+bin/phpspec run
+```
+
+Integration testing is done with the Laravel framework's built-in testing functionality. Integration testing is generally avoided except in cases like the Relational Event Store in which we want to know for sure that it interacts with the database / domain event serializers / etc correctly.
+
+To run the integration tests:
+
+```
+bin/phpunit
+```
 
 # Command Line Tools
 
