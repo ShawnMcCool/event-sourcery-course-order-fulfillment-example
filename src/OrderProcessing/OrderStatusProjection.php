@@ -20,7 +20,7 @@ class OrderStatusProjection extends RelationalProjection {
         $productIds = array_map(function(ProductId $productId) {
             return $productId->toString();
         }, $e->products());
-        
+
         $this->table()->insert([
             'order_id' => $e->orderId()->toString(),
             'customer_id' => $e->customerId()->toString(),

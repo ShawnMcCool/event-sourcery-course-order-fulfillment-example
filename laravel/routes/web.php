@@ -24,9 +24,8 @@ group(['fake-customer-session'], function() {
 
 // Employee Interface
 group(['fake-employee-session'], function() {
-    test_route('confirm-order', function() {
-        return view('confirm-order');
-    });
+
+    get('confirm-order', ConfirmOrder::class, 'viewPlacedOrders');
 
     test_route('fulfill-order', function() {
         return view('fulfill-order');

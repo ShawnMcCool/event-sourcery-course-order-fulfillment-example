@@ -6,16 +6,21 @@
 
         <form class="uk-form-width-large">
             <ul class="uk-list">
-                <li>
-                    <strong>Order 1</strong>
-                    <div>Product 1, Product 2</div>
-                    <a href="#">Confirm</a>
-                </li>
-                <li>
-                    <strong>Order 2</strong>
-                    <div>Product 2</div>
-                    <a href="#">Confirm</a>
-                </li>
+                @forelse($orders as $order)
+                    <li>
+                        <strong>Order {{ $order->customer_name }}</strong> placed {{ $order->placedAt() }}
+                        <div>{{ $order->delimitedProductList() }}</div>
+                        <div>{{ $order->totalPriceWithCurrency() }}</div>
+                        <a href="#">Confirm</a>
+                    </li>
+                @empty
+                    <p><li>no orders</li></p>
+                @endforelse
+                {{--<li>--}}
+                    {{--<strong>Order 2</strong>--}}
+                    {{--<div>Product 2</div>--}}
+                    {{--<a href="#">Confirm</a>--}}
+                {{--</li>--}}
             </ul>
         </form>
     </div>
