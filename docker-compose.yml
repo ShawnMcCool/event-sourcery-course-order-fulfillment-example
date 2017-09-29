@@ -1,0 +1,43 @@
+version: "3.1"
+
+services:
+
+  nginx:
+    build:
+      dockerfile: dockerfile
+      context: ./docker/nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - web:/var/www/order-fulfillment-example
+
+  php:
+    build:
+      dockerfile: dockerfile
+      context: ./docker/php7-fpm
+      args:
+        UID: 1000
+    volumes:
+      - web:/var/www/order-fulfillment-example
+
+  mysql:
+    image: mysql:5.7.19
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_USER: root 
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: development 
+      MYSQL_ROOT_PASSWORD: rootpassword 
+    ports:
+      - 3306:3306
+
+  beanstalked:
+    image: schickling/beanstalkd
+    ports:
+      - 11300:11300
+
+volumes:
+  db_data:

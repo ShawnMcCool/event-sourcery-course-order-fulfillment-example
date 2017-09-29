@@ -6,6 +6,7 @@ use OrderFulfillment\EventSourcing\EventStore;
 use OrderFulfillment\EventSourcing\StreamEvent;
 use OrderFulfillment\EventSourcing\StreamEvents;
 use OrderFulfillment\EventSourcing\StreamId;
+use OrderFulfillment\EventSourcing\StreamVersion;
 
 class TestEventStoreSpy implements EventStore {
 
@@ -24,7 +25,15 @@ class TestEventStoreSpy implements EventStore {
     }
 
     public function getStream(StreamId $id): StreamEvents {
-
+        $streamEvents = [];
+        for ($i = 0; $i<count($this->events); $i++) {
+            $streamEvents[] = new StreamEvent(
+                $id,
+                StreamVersion::fromInt($i+1),
+                $this->events[$i]
+            );
+        }
+        return StreamEvents::make($streamEvents);
     }
 
     public function storedEvents(): DomainEvents {

@@ -13,25 +13,21 @@ class ConfirmOrder extends Controller {
         $this->command = $command;
     }
 
-    public function viewPlacedOrders() {
-        return view('confirm-order', [
+    public function selectOrderToConfirm() {
+        return view('confirm-an-order.select-order-to-confirm', [
             'orders' => OrderStatus::placed()
         ]);
     }
 
-    public function place(Request $request) {
+    public function confirmOrder(Request $request) {
         $this->command->execute(
-            new \OrderFulfillment\OrderProcessing\PlaceOrder(
-                OrderId::generate(),
-                \Session::get('customer_id'),
-                \Session::get('customer_name'),
-                $request->get('products'),
-                1200,
-                'EUR',
+            new \OrderFulfillment\OrderProcessing\ConfirmOrder(
+                $request->get('orderId'),
+                \Session::get('employee_id'),
                 new \DateTimeImmutable('now')
             )
         );
-        return \Redirect::to('/thanks-for-your-order');
+        return \Redirect::to('/confirm-an-order/order-was-confirmed');
     }
 
     public function thanks() {

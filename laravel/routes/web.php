@@ -2,20 +2,18 @@
 
 // Customer Interface
 group(['fake-customer-session'], function() {
+    // main menu
     test_route('/', function() {
         return view('index');
     });
 
-    test_route('place-order', function() {
-        return view('place-order');
-    });
+    // place an order
+    get('place-an-order/view-products', PlaceOrder::class, 'viewProducts');
+    post('place-an-order/place-order', PlaceOrder::class, 'placeOrder');
+    get('place-an-order/thanks-for-your-order', PlaceOrder::class, 'thanksForYourOrder');
 
-    post('place-order', PlaceOrder::class, 'place');
-    get('thanks-for-your-order', PlaceOrder::class, 'thanks');
-
-    test_route('make-payment', function() {
-        return view('make-payment');
-    });
+    // make a payment
+    get('make-a-payment/choose-an-order', MakePayment::class, 'chooseAnOrder');
 
     test_route('payment-received', function() {
         return view('payment-received');
@@ -25,7 +23,9 @@ group(['fake-customer-session'], function() {
 // Employee Interface
 group(['fake-employee-session'], function() {
 
-    get('confirm-order', ConfirmOrder::class, 'viewPlacedOrders');
+    // confirm an order
+    get('confirm-an-order/select-order-to-confirm', ConfirmOrder::class, 'selectOrderToConfirm');
+    get('confirm-an-order/confirm-order/{orderId}', ConfirmOrder::class, 'confirmOrder');
 
     test_route('fulfill-order', function() {
         return view('fulfill-order');

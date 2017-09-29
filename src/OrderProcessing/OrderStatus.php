@@ -10,6 +10,18 @@ class OrderStatus extends Model {
         return static::where('order_status', '=', 'placed')->orderBy('order_placed_at', 'asc')->get();
     }
 
+    public static function confirmed() {
+        return static::where('order_status', '=', 'confirmed')->orderBy('confirmed_at', 'asc')->get();
+    }
+
+    public function orderId() {
+        return $this->order_id;
+    }
+
+    public function customerName() {
+        return $this->customer_name;
+    }
+
     public function productArray() {
         return (array) json_decode($this->product_list_json);
     }

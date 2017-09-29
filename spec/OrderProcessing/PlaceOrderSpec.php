@@ -10,7 +10,7 @@ use PhpSpec\ObjectBehavior;
 
 class PlaceOrderSpec extends ObjectBehavior {
 
-    private $orderId = 'group id';
+    private $orderId = 'order id';
     private $customerId = 'customer id';
     private $customerName = 'customer name';
     private $products = ['product id 1', 'product id 2'];

@@ -22,7 +22,7 @@
             <!-- Navigation Links -->
             <ul class="uk-navbar-nav">
                 <li>
-                    <a href="/confirm-order">Confirm Orders</a>
+                    <a href="/confirm-an-order/select-order-to-confirm">Confirm Orders</a>
                 </li>
                 <li>
                     <a href="/fulfill-order">Fulfill Orders</a>

@@ -13,7 +13,11 @@ class PlaceOrder extends Controller {
         $this->command = $command;
     }
 
-    public function place(Request $request) {
+    public function viewProducts() {
+        return view('place-an-order.view-products');
+    }
+
+    public function placeOrder(Request $request) {
         $this->command->execute(
             new \OrderFulfillment\OrderProcessing\PlaceOrder(
                 OrderId::generate(),
@@ -25,10 +29,10 @@ class PlaceOrder extends Controller {
                 new \DateTimeImmutable('now')
             )
         );
-        return \Redirect::to('/thanks-for-your-order');
+        return \Redirect::to('/place-an-order/thanks-for-your-order');
     }
 
-    public function thanks() {
-        return view('thanks');
+    public function thanksForYourOrder() {
+        return view('place-an-order/thanks-for-your-order');
     }
 }

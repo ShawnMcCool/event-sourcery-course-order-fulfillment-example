@@ -22,13 +22,13 @@
             <!-- Navigation Links -->
             <ul class="uk-navbar-nav">
                 <li>
-                    <a href="/place-order">Shop</a>
+                    <a href="/place-an-order/view-products">Place an Order</a>
                 </li>
                 <li>
-                    <a href="/make-payment">Make a Payment</a>
+                    <a href="/make-a-payment/choose-an-order">Make a Payment</a>
                 </li>
                 <li>
-                    <a href="/confirm-order">Employee Interface</a>
+                    <a href="/confirm-an-order/select-order-to-confirm">Employee Interface</a>
                 </li>
             </ul>
 
