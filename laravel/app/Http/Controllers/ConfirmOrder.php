@@ -19,10 +19,10 @@ class ConfirmOrder extends Controller {
         ]);
     }
 
-    public function confirmOrder(Request $request) {
+    public function confirmOrder(Request $request, $orderId) {
         $this->command->execute(
             new \OrderFulfillment\OrderProcessing\ConfirmOrder(
-                $request->get('orderId'),
+                $orderId,
                 \Session::get('employee_id'),
                 new \DateTimeImmutable('now')
             )
@@ -30,7 +30,7 @@ class ConfirmOrder extends Controller {
         return \Redirect::to('/confirm-an-order/order-was-confirmed');
     }
 
-    public function thanks() {
-        return view('thanks');
+    public function orderWasConfirmed() {
+        return view('confirm-an-order.order-was-confirmed');
     }
 }

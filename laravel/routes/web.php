@@ -26,6 +26,7 @@ group(['fake-employee-session'], function() {
     // confirm an order
     get('confirm-an-order/select-order-to-confirm', ConfirmOrder::class, 'selectOrderToConfirm');
     get('confirm-an-order/confirm-order/{orderId}', ConfirmOrder::class, 'confirmOrder');
+    get('confirm-an-order/order-was-confirmed', ConfirmOrder::class, 'orderWasConfirmed');
 
     test_route('fulfill-order', function() {
         return view('fulfill-order');

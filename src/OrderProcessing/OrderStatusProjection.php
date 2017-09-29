@@ -33,4 +33,10 @@ class OrderStatusProjection extends RelationalProjection {
             'order_placed_at' => $e->placedAt()->format('Y-m-d H:i:s')
         ]);
     }
+
+    public function OrderWasConfirmed(OrderWasConfirmed $e): void {
+        $this->table()->where('order_id', '=', $e->orderId()->toString())->update([
+            'order_status' => 'confirmed'
+        ]);
+    }
 }

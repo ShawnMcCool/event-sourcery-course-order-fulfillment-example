@@ -12,6 +12,7 @@ class OrderProcessingServiceProvider extends ServiceProvider {
         $eventClasses = $this->app[DomainEventClassMap::class];
         // map the 'OrderWasPlaced' event to the correct class.
         $eventClasses->add('OrderWasPlaced', OrderWasPlaced::class);
+        $eventClasses->add('OrderWasConfirmed', OrderWasConfirmed::class);
 
         /** @var ProjectionManager $projections */
         $projections = $this->app[ProjectionManager::class];
