@@ -28,7 +28,7 @@
                     <a href="/fulfill-order">Fulfill Orders</a>
                 </li>
                 <li>
-                    <a href="/place-order">Customer Interface</a>
+                    <a href="/place-an-order/view-products">Customer Interface</a>
                 </li>
             </ul>
 

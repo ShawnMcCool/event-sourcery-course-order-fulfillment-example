@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use OrderFulfillment\CommandDispatch\CommandBus;
 use OrderFulfillment\OrderProcessing\OrderStatus;
 
@@ -18,4 +19,16 @@ class MakePayment extends Controller {
         ]);
     }
 
+    public function makeAPaymentForm($orderId) {
+        return view('making-a-payment/make-a-payment', [
+            'order' => OrderStatus::where('order_id', '=', $orderId)->firstOrFail(),
+            'payments' => collect([])
+        ]);
+    }
+
+    public function makeAPayment($orderId, Request $request) {
+        $this->command->execute(
+
+        );
+    }
 }

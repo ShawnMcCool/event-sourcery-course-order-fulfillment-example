@@ -115,3 +115,7 @@ dev :: /vagrant » ./scripts/tmux-queue.sh
 
 fake-customer-session  
 fake-employee-session
+
+# Known Oversights
+
+Forms aren't effectively validated, etc.

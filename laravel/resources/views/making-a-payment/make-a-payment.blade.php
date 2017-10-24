@@ -4,21 +4,25 @@
     <div class="uk-card uk-background-default uk-position-center uk-card-body uk-box-shadow-large uk-width-auto">
         <h3 class="uk-card-title">Make a Payment</h3>
 
-        <p>Order # order id</p>
-        <p>Total Order Price: $32</p>
+        <p>Order # {{ $order->orderId() }}</p>
+        <p>Total Order Price: {{ $order->totalPriceWithCurrency() }}</p>
 
-        <ul class="uk-list">
-            <li>
-                <strong>Payment</strong>
-                $31.75
-            </li>
-            <li>
-                <strong>Payment</strong>
-                $2.12
-            </li>
-        </ul>
+        <p>Payments<br/>
+            @if($payments->isEmpty())
+                No payments have been made on this order.
+            @else
+                <ul class="uk-list">
+                    @foreach($payments as $payment)
+                        <li>
+                            <strong>Payment</strong>
+                            $31.75
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </p>
 
-        <form class="uk-form-width-large">
+        <form method="post" class="uk-form-width-large">
             <ul class="uk-list">
                 <li>
                     Amount: <input type="text" name="payment_amount"/>

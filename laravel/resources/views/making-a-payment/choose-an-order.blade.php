@@ -7,7 +7,10 @@
         <ul class="uk-list">
             @forelse($orders as $order)
                 <li>
-                    {{ $order->customerName() }}
+                    <strong>Order {{ $order->customer_name }}</strong> placed {{ $order->placedAt() }}
+                    <div>{{ $order->delimitedProductList() }}</div>
+                    <div>{{ $order->totalPriceWithCurrency() }}</div>
+                    <a href="/make-a-payment/make-a-payment/{{ $order->orderId() }}">Make a payment on this order.</a>
                 </li>
             @empty
                 <li>No orders have been confirmed.</li>
