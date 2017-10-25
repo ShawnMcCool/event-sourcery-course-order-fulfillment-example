@@ -15,7 +15,7 @@
                     @foreach($payments as $payment)
                         <li>
                             <strong>Payment</strong>
-                            $31.75
+                            {{ $payment->amountWithCurrency() }}
                         </li>
                     @endforeach
                 </ul>

@@ -16,6 +16,7 @@ group(['fake-customer-session'], function () {
     get('make-a-payment/choose-an-order', MakePayment::class, 'chooseAnOrder');
     get('make-a-payment/make-a-payment/{orderId}', MakePayment::class, 'makeAPaymentForm');
     post('make-a-payment/make-a-payment/{orderId}', MakePayment::class, 'makeAPayment');
+    get('make-a-payment/payment-was-made', MakePayment::class, 'paymentWasMade');
 
     test_route('payment-received', function () {
         return view('payment-received');

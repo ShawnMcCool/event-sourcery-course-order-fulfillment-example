@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use OrderFulfillment\CommandDispatch\CommandBus;
+use OrderFulfillment\OrderProcessing\MakeAPayment;
 use OrderFulfillment\OrderProcessing\OrderStatus;
+use OrderFulfillment\OrderProcessing\PaymentList;
 
 class MakePayment extends Controller {
 
@@ -22,13 +24,18 @@ class MakePayment extends Controller {
     public function makeAPaymentForm($orderId) {
         return view('making-a-payment/make-a-payment', [
             'order' => OrderStatus::where('order_id', '=', $orderId)->firstOrFail(),
-            'payments' => collect([])
+            'payments' => PaymentList::paymentsForOrder($orderId)
         ]);
     }
 
     public function makeAPayment($orderId, Request $request) {
         $this->command->execute(
-
+            new MakeAPayment($orderId, $request->get('payment_amount') * 100, 'EUR', new \DateTimeImmutable)
         );
+        return \Redirect::to('/make-a-payment/payment-was-made');
+    }
+
+    public function paymentWasMade() {
+        return view('making-a-payment/payment-was-made');
     }
 }

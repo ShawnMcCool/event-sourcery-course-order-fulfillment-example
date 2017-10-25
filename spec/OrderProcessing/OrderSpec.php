@@ -3,12 +3,14 @@
 use OrderFulfillment\Money\Currency;
 use OrderFulfillment\Money\Money;
 use OrderFulfillment\OrderProcessing\CannotConfirmOrderMoreThanOnce;
+use OrderFulfillment\OrderProcessing\CannotPayMoreThanTotal;
 use OrderFulfillment\OrderProcessing\CustomerId;
 use OrderFulfillment\OrderProcessing\EmployeeId;
 use OrderFulfillment\OrderProcessing\Order;
 use OrderFulfillment\OrderProcessing\OrderId;
 use OrderFulfillment\OrderProcessing\OrderWasConfirmed;
 use OrderFulfillment\OrderProcessing\OrderWasPlaced;
+use OrderFulfillment\OrderProcessing\PaymentWasMade;
 use OrderFulfillment\OrderProcessing\ProductId;
 use PhpSpec\ObjectBehavior;
 
@@ -76,6 +78,28 @@ class OrderSpec extends ObjectBehavior {
         $this->shouldThrow(CannotConfirmOrderMoreThanOnce::class)->during('confirm', [
             EmployeeId::fromString($this->employeeId),
             new \DateTimeImmutable($this->confirmedAt)
+        ]);
+    }
+
+    function it_makes_payments() {
+        $this->makePayment(
+            Money::fromCents(100, new Currency('usd')),
+            new \DateTimeImmutable('2017-07-27 15:16:17')
+        );
+
+        $this->flushEvents()->shouldContainEvent(
+            new PaymentWasMade(
+                OrderId::fromString($this->orderId),
+                Money::fromCents(100, new Currency('usd')),
+                new \DateTimeImmutable('2017-07-27 15:16:17')
+            )
+        );
+    }
+
+    function it_cannot_make_payments_larger_than_the_total() {
+        $this->shouldThrow(CannotPayMoreThanTotal::class)->during('makePayment', [
+            Money::fromCents($this->totalPriceCents+1, new Currency($this->currency)),
+            new \DateTimeImmutable('2017-07-27 15:16:17')
         ]);
     }
 }

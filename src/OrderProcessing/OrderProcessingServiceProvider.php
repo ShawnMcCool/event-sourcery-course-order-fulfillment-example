@@ -13,10 +13,12 @@ class OrderProcessingServiceProvider extends ServiceProvider {
         // map the 'OrderWasPlaced' event to the correct class.
         $eventClasses->add('OrderWasPlaced', OrderWasPlaced::class);
         $eventClasses->add('OrderWasConfirmed', OrderWasConfirmed::class);
+        $eventClasses->add('PaymentWasMade', PaymentWasMade::class);
 
         /** @var ProjectionManager $projections */
         $projections = $this->app[ProjectionManager::class];
         // instantiate and add projection listener to the projection manager
         $projections->add(new OrderStatusProjection($this->app[EventStore::class]));
+        $projections->add(new PaymentListProjection($this->app[EventStore::class]));
     }
 }

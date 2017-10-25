@@ -24,10 +24,13 @@ class Money {
     }
 
     public function add(Money $that) {
-        if ( ! $this->currency->equals($that->currency)) {
-            throw new CurrenciesDontMatch($this->currency, $that->currency);
-        }
+        $this->validateCurrencies($that);
         return new Money($this->cents + $that->cents, $this->currency);
+    }
+
+    public function isGreaterThan(Money $that): bool {
+        $this->validateCurrencies($that);
+        return $this->cents > $that->cents;
     }
 
     public function reducedByPercent($percent) {
@@ -47,5 +50,15 @@ class Money {
 
     public function toString(): string {
         return $this->currency . ' ' . ($this->cents / 100);
+    }
+
+    /**
+     * @param Money $that
+     * @throws CurrenciesDontMatch
+     */
+    private function validateCurrencies(Money $that) {
+        if ( ! $this->currency->equals($that->currency)) {
+            throw new CurrenciesDontMatch($this->currency, $that->currency);
+        }
     }
 }
