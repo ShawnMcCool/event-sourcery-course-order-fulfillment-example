@@ -28,6 +28,12 @@ php artisan key:generate
 
 Then, you can access the page in your browser at [http://localhost:8080](http://localhost:8080)
 
+# Running the Application 
+
+**It's important to note** that event dispatch occurs asynchronously in this application. Therefore, the queue workers need to be run in order for the application to function correctly.
+
+You can manually start the queue workers with the [scripts provided](scripts/).
+
 # Domain Events
 
 Below are descriptions of the domain events in our systems and the data fields contained within.
