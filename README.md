@@ -36,6 +36,49 @@ Then, you can access the page in your browser at [http://localhost:8080](http://
 
 You can manually start the queue workers with the [scripts provided](scripts/).
 
+# Testing
+
+Unit testing is done with PhpSpec. Some PhpSpec extensions were made to make testing easier to write and read.
+
+To run the unit tests:
+
+```
+bin/phpspec run
+```
+
+Integration testing is done with the Laravel framework's built-in testing functionality. Integration testing is generally avoided except in cases like the Relational Event Store in which we want to know that it interacts with the database / domain event serializers / etc correctly.
+
+To run the integration tests:
+
+```
+bin/phpunit
+```
+
+# Command Line Tools
+
+Should you use the vagrant virtual machine, you'll be able to use a TMUX setting to get a convenient HUD.
+
+
+
+Try it out with the following:
+
+```
+$ vagrant ssh
+dev :: /vagrant » ./scripts/tmux-queue.sh 
+``` 
+
+
+# Routing
+
+## Middleware
+
+fake-customer-session  
+fake-employee-session
+
+# Known Oversights
+
+Forms aren't effectively validated, etc.
+
 # Domain Events
 
 Below are descriptions of the domain events in our systems and the data fields contained within.
@@ -81,49 +124,5 @@ Once the received amount is the same as the total amount of the order then the o
 Once the order has been completed and our employee has packed and shipped the order, the order is marked as fulfilled by our employee. This significes the end of the order process.
 
 * Order ID - The unique order identifier.
-* Tracking Number - Tracking Number is a unique identifier that allows the customer to track the progress of the order's delivery. 
 * Fulfilled By - Fulfilled By is the ID of the employee who fulfilled the order.
 * Fulfilled At - Fulfilled At is the time and date that the order was gfulfilled.
-
-# Testing
-
-Unit testing is done with PhpSpec. Some PhpSpec extensions were made to make testing easier to write and read.
-
-To run the unit tests:
-
-```
-bin/phpspec run
-```
-
-Integration testing is done with the Laravel framework's built-in testing functionality. Integration testing is generally avoided except in cases like the Relational Event Store in which we want to know for sure that it interacts with the database / domain event serializers / etc correctly.
-
-To run the integration tests:
-
-```
-bin/phpunit
-```
-
-# Command Line Tools
-
-Should you use the vagrant virtual machine, you'll be able to use a TMUX setting to get a convenient HUD.
-
-
-
-Try it out with the following:
-
-```
-$ vagrant ssh
-dev :: /vagrant » ./scripts/tmux-queue.sh 
-``` 
-
-
-# Routing
-
-## Middleware
-
-fake-customer-session  
-fake-employee-session
-
-# Known Oversights
-
-Forms aren't effectively validated, etc.
