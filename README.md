@@ -1,5 +1,7 @@
 This is the readme for the order fulfillment example application. Installation instructions and much more will be added in this file.
 
+> Documentation is not yet complete. Be sure to [join the Slack channel](https://eventsourcery.com/slack-invite) if you have questions.
+
 
 # Installation
 
