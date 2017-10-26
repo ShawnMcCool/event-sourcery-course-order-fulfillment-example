@@ -23,11 +23,18 @@ class CreateOrderProcessingOrderStatusTable extends Migration
             $t->string('total_price');
             $t->string('order_currency');
             $t->string('order_status');
-            $t->string('confirmed_by_employee_id')->nullable();;
+
+            $t->dateTime('order_placed_at')->nullable();
+
+            $t->string('confirmed_by_employee_id')->nullable();
             $t->datetime('confirmed_at')->nullable();
+
             $t->string('total_payment_received');
             $t->datetime('last_payment_received_at')->nullable();
-            $t->dateTime('order_placed_at');
+            $t->datetime('completed_at')->nullable();
+
+            $t->string('fulfilled_by_employee_id')->nullable();
+            $t->dateTime('fulfilled_at')->nullable();
         });
     }
 

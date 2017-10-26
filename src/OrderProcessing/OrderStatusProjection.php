@@ -36,7 +36,31 @@ class OrderStatusProjection extends RelationalProjection {
 
     public function OrderWasConfirmed(OrderWasConfirmed $e): void {
         $this->table()->where('order_id', '=', $e->orderId()->toString())->update([
-            'order_status' => 'confirmed'
+            'order_status' => 'confirmed',
+            'confirmed_by_employee_id' => $e->employeeId()->toString(),
+            'confirmed_at' => $e->confirmedAt()->format('Y-m-d H:i:s')
+        ]);
+    }
+
+    public function PaymentWasMade(PaymentWasMade $e): void {
+        $this->table()->where('order_id', '=', $e->orderId()->toString())->increment('total_payment_received', $e->amount()->toCents());
+        $this->table()->where('order_id', '=', $e->orderId()->toString())->update([
+            'last_payment_received_at' => $e->paidAt()->format('Y-m-d H:i:s')
+        ]);
+    }
+
+    public function OrderWasCompleted(OrderWasCompleted $e): void {
+        $this->table()->where('order_id', '=', $e->orderId()->toString())->update([
+            'order_status' => 'completed',
+            'completed_at' => $e->completedAt()->format('Y-m-d H:i:s')
+        ]);
+    }
+
+    public function OrderWasFulfilled(OrderWasFulfilled $e): void {
+        $this->table()->where('order_id', '=', $e->orderId()->toString())->update([
+            'order_status' => 'fulfilled',
+            'fulfilled_by_employee_id' => $e->employeeId()->toString(),
+            'fulfilled_at' => $e->fulfilledAt()->format('Y-m-d H:i:s')
         ]);
     }
 }

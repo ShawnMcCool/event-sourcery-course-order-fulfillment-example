@@ -30,7 +30,7 @@ class Money {
 
     public function isGreaterThan(Money $that): bool {
         $this->validateCurrencies($that);
-        return $this->cents > $that->cents;
+        return (int) $this->cents > (int) $that->cents;
     }
 
     public function reducedByPercent($percent) {

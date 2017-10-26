@@ -14,6 +14,10 @@ class OrderStatus extends Model {
         return static::where('order_status', '=', 'confirmed')->orderBy('confirmed_at', 'asc')->get();
     }
 
+    public static function completed() {
+        return static::where('order_status', '=', 'completed')->orderBy('completed_at', 'asc')->get();
+    }
+
     public function orderId() {
         return $this->order_id;
     }

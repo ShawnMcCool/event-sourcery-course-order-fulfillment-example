@@ -17,21 +17,17 @@ group(['fake-customer-session'], function () {
     get('make-a-payment/make-a-payment/{orderId}', MakePayment::class, 'makeAPaymentForm');
     post('make-a-payment/make-a-payment/{orderId}', MakePayment::class, 'makeAPayment');
     get('make-a-payment/payment-was-made', MakePayment::class, 'paymentWasMade');
-
-    test_route('payment-received', function () {
-        return view('payment-received');
-    });
 });
 
 // Employee Interface
 group(['fake-employee-session'], function () {
-
     // confirm an order
     get('confirm-an-order/select-order-to-confirm', ConfirmOrder::class, 'selectOrderToConfirm');
     get('confirm-an-order/confirm-order/{orderId}', ConfirmOrder::class, 'confirmOrder');
     get('confirm-an-order/order-was-confirmed', ConfirmOrder::class, 'orderWasConfirmed');
 
-    test_route('fulfill-order', function () {
-        return view('fulfill-order');
-    });
+    // fullfill the order
+    get('fulfill-an-order/choose-an-order', FulfillOrder::class, 'selectOrderToFulfill');
+    get('fulfill-an-order/fulfill-order/{orderId}', FulfillOrder::class, 'fulfillOrder');
+    get('fulfill-an-order/order-was-fulfilled', FulfillOrder::class, 'orderWasFulfilled');
 });

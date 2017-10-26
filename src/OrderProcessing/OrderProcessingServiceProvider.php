@@ -14,6 +14,8 @@ class OrderProcessingServiceProvider extends ServiceProvider {
         $eventClasses->add('OrderWasPlaced', OrderWasPlaced::class);
         $eventClasses->add('OrderWasConfirmed', OrderWasConfirmed::class);
         $eventClasses->add('PaymentWasMade', PaymentWasMade::class);
+        $eventClasses->add('OrderWasCompleted', OrderWasCompleted::class);
+        $eventClasses->add('OrderWasFulfilled', OrderWasFulfilled::class);
 
         /** @var ProjectionManager $projections */
         $projections = $this->app[ProjectionManager::class];

@@ -17,7 +17,7 @@
 
         <h3 class="uk-card-title">Your Cart</h3>
 
-        <form class="uk-form-width-large" method="post" action="/place-an-order">
+        <form class="uk-form-width-large" method="post" action="/place-an-order/place-order">
             <ul class="uk-list">
                 <li>
                     Product 1 <a href="#">Remove</a>

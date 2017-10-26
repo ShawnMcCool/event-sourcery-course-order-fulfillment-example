@@ -2,7 +2,6 @@
 
 use OrderFulfillment\EventSourcing\Aggregate;
 use OrderFulfillment\EventSourcing\Id;
-use OrderFulfillment\Money\Currency;
 use OrderFulfillment\Money\Money;
 
 class Order extends Aggregate {
@@ -30,9 +29,13 @@ class Order extends Aggregate {
         );
     }
 
-    public function makePayment(Money $amount, \DateTimeImmutable $paidAt) {
-        if ($this->totalAmountPaid->add($amount)->isGreaterThan($this->totalOrderPrice)) {
-            throw new CannotPayMoreThanTotal("Tried to make a payment larger than the total price for order " . $this->orderId->toString());
+    public function makePayment(Money $amount, \DateTimeImmutable $paidAt): void {
+        if ($this->status != "confirmed") {
+            throw new CannotMakePaymentsOnUnconfirmedOrders($this->orderId->toString());
+        }
+        $subtotal = $this->totalAmountPaid->add($amount);
+        if ($subtotal->isGreaterThan($this->totalOrderPrice)) {
+            throw new CannotPayMoreThanTotal("Tried to make a payment larger than the total price for order " . $this->orderId->toString() . ' Payment was ' . $amount->toString() . ' subtotal was ' . $subtotal->toString() . ' and total price was ' . $this->totalOrderPrice->toString());
         }
         $this->raise(
             new PaymentWasMade(
@@ -41,11 +44,34 @@ class Order extends Aggregate {
                 $paidAt
             )
         );
+        if ($subtotal->equals($this->totalOrderPrice)) {
+            $this->raise(
+                new OrderWasCompleted(
+                    $this->orderId,
+                    $paidAt
+                )
+            );
+        }
+    }
+
+    public function fulfill(EmployeeId $employeeId, \DateTimeImmutable $fulfilledAt): void {
+        if ($this->status != "completed") {
+            throw new CannotFulfillAnOrderThatHasNotBeenCompleted($this->orderId->toString());
+        }
+
+        $this->raise(
+            new OrderWasFulfilled(
+                $this->orderId,
+                $employeeId,
+                $fulfilledAt
+            )
+        );
     }
 
     // apply
     /** @var OrderId $orderId */
     private $orderId;
+    /** @var string $status */
     private $status;
     /** @var Money $totalAmountPaid */
     private $totalAmountPaid;
@@ -65,6 +91,14 @@ class Order extends Aggregate {
 
     protected function applyPaymentWasMade(PaymentWasMade $e) {
         $this->totalAmountPaid = $this->totalAmountPaid->add($e->amount());
+    }
+
+    protected function applyOrderWasCompleted(OrderWasCompleted $e) {
+        $this->status = 'completed';
+    }
+
+    protected function applyOrderWasFulfilled(OrderWasFulfilled $e) {
+        $this->status = 'fulfilled';
     }
 
     // read

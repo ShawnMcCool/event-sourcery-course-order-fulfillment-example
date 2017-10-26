@@ -24,10 +24,4 @@ class PaymentListProjection extends RelationalProjection {
             'paid_at' => $e->paidAt()->format('Y-m-d H:i:s')
         ]);
     }
-
-    public function OrderWasConfirmed(OrderWasConfirmed $e): void {
-        $this->table()->where('order_id', '=', $e->orderId()->toString())->update([
-            'order_status' => 'confirmed'
-        ]);
-    }
 }

@@ -1,14 +1,13 @@
 <?php namespace spec\OrderFulfillment\OrderProcessing;
 
-use OrderFulfillment\OrderProcessing\MakeAPayment;
+use OrderFulfillment\OrderProcessing\FulfillOrder;
 use PhpSpec\ObjectBehavior;
 use spec\OrderFulfillment\EventSourcing\TestEventStoreSpy;
 use function spec\OrderFulfillment\PhpSpec\expect;
 
-class MakeAPaymentHandlerSpec extends ObjectBehavior {
+class FulfillOrderHandlerSpec extends ObjectBehavior {
 
     private $eventStore;
-    private $eventCount;
 
     function let() {
         $builder = new OrderStreamBuilder();
@@ -19,18 +18,17 @@ class MakeAPaymentHandlerSpec extends ObjectBehavior {
         $orderId = 'order id';
         $stream = $builder->placeOrder($orderId);
         $stream = $builder->confirmOrder($stream, $orderId);
-
+        $stream = $builder->completeOrder($stream, $orderId);
         $this->eventStore->storeStream($stream);
-        $this->eventCount = $this->eventStore->storedEvents()->count();
     }
 
-    function it_coordinates_order_payment() {
-        $this->handle(new MakeAPayment(
+    function it_coordinates_order_fulfillment() {
+        $this->handle(new FulfillOrder(
             'order id',
-            '100', 'USD',
+            'employee id',
             new \DateTimeImmutable('2017-07-27 9:10:11')
         ));
         expect($this->eventStore->storedEvents()->count())
-            ->toNotBe($this->eventCount);
+            ->toNotBe(1);
     }
 }
