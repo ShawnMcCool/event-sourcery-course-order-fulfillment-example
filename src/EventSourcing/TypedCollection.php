@@ -13,7 +13,7 @@ abstract class TypedCollection extends Collection {
     protected function guardType($items) : void {
         // this allows guardType($items) to receive
         // both a single item or an array of items
-        if ( ! array($items)) {
+        if ( ! is_array($items)) {
             $items = array($items);
         }
 
