@@ -1,18 +1,18 @@
 <?php namespace App\Http\Middleware;
 
-use Session;
 use Ramsey\Uuid\Uuid;
+use Session;
 
 class FakeCustomerSession {
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, \Closure $next)
-    {
+    public function handle($request, \Closure $next) {
         if ( ! Session::has('customer_name') || ! Session::has('customer_id')) {
             $faker = \Faker\Factory::create();
 

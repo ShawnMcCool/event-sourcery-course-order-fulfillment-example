@@ -179,6 +179,7 @@ return [
         \OrderFulfillment\LaravelCommandDispatchDrivers\CommandDispatchServiceProvider::class,
         \OrderFulfillment\LaravelEventSourcingDrivers\EventSourcingServiceProvider::class,
         \OrderFulfillment\OrderProcessing\OrderProcessingServiceProvider::class,
+        \OrderFulfillment\LatePaymentReminders\LatePaymentRemindersServiceProvider::class,
     ],
 
     /*
