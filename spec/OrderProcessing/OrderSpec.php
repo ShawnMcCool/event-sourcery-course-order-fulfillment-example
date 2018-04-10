@@ -8,6 +8,7 @@ use OrderFulfillment\OrderProcessing\CannotMakePaymentsOnUnconfirmedOrders;
 use OrderFulfillment\OrderProcessing\CannotPayMoreThanTotal;
 use OrderFulfillment\OrderProcessing\CustomerId;
 use OrderFulfillment\OrderProcessing\EmployeeId;
+use OrderFulfillment\OrderProcessing\InvoiceWasSent;
 use OrderFulfillment\OrderProcessing\OrderId;
 use OrderFulfillment\OrderProcessing\OrderWasCompleted;
 use OrderFulfillment\OrderProcessing\OrderWasConfirmed;
@@ -68,6 +69,22 @@ class OrderSpec extends ObjectBehavior {
             new OrderWasConfirmed(
                 OrderId::fromString($this->orderId),
                 EmployeeId::fromString($this->employeeId),
+                new \DateTimeImmutable($this->confirmedAt)
+            )
+        );
+    }
+
+    function it_sends_invoices() {
+        $this->confirm(
+            EmployeeId::fromString($this->employeeId),
+            new \DateTimeImmutable($this->confirmedAt)
+        );
+
+        $this->flushEvents()->shouldContainEvent(
+            new InvoiceWasSent(
+                OrderId::fromString($this->orderId),
+                $this->customerName,
+                Money::fromCents($this->totalPriceCents, new Currency($this->currency)),
                 new \DateTimeImmutable($this->confirmedAt)
             )
         );

@@ -27,6 +27,15 @@ class Order extends Aggregate {
                 $confirmedAt
             )
         );
+
+        $this->raise(
+            new InvoiceWasSent(
+                $this->orderId,
+                $this->customerName,
+                $this->totalOrderPrice,
+                $confirmedAt
+            )
+        );
     }
 
     public function makePayment(Money $amount, \DateTimeImmutable $paidAt): void {
@@ -77,12 +86,15 @@ class Order extends Aggregate {
     private $totalAmountPaid;
     /** @var Money $totalOrderPrice */
     private $totalOrderPrice;
+    /** @var string $customerName */
+    private $customerName;
 
     protected function applyOrderWasPlaced(OrderWasPlaced $e) {
         $this->orderId = $e->orderId();
         $this->status  = "placed";
         $this->totalAmountPaid = Money::fromCents(0, $e->totalPrice()->currency());
         $this->totalOrderPrice = $e->totalPrice();
+        $this->customerName = $e->customerName();
     }
 
     protected function applyOrderWasConfirmed(OrderWasConfirmed $e) {
@@ -100,6 +112,8 @@ class Order extends Aggregate {
     protected function applyOrderWasFulfilled(OrderWasFulfilled $e) {
         $this->status = 'fulfilled';
     }
+
+    protected function applyInvoiceWasSent(InvoiceWasSent $e) {}
 
     // read
     public function id(): Id {
