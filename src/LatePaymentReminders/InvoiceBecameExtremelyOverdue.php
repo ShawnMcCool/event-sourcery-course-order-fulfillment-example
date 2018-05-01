@@ -3,7 +3,7 @@
 use OrderFulfillment\EventSourcing\DomainEvent;
 use OrderFulfillment\OrderProcessing\OrderId;
 
-class InvoiceBecameOverdue implements DomainEvent {
+class InvoiceBecameExtremelyOverdue implements DomainEvent {
 
     /** @var OrderId */
     private $orderId;
@@ -31,7 +31,7 @@ class InvoiceBecameOverdue implements DomainEvent {
     }
 
     public static function deserialize(array $data): DomainEvent {
-        return new InvoiceBecameOverdue(
+        return new static(
             OrderId::fromString($data['orderId']),
             new \DateTimeImmutable($data['becameOverdueAt'])
         );

@@ -1,12 +1,12 @@
-<?php
-
-namespace App\Console;
+<?php namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use OrderFulfillment\EventSourcing\EventStore;
+use OrderFulfillment\LatePaymentReminders\ADayPassed;
 
-class Kernel extends ConsoleKernel
-{
+class Kernel extends ConsoleKernel {
+
     /**
      * The Artisan commands provided by your application.
      *
@@ -14,19 +14,19 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ProjectionsList::class,
-        ProjectionsRebuild::class
+        ProjectionsRebuild::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
-    {
-        // $schedule->command('inspire')
-        //          ->hourly();
+    protected function schedule(Schedule $schedule) {
+        $schedule->call(function (EventStore $eventStore) {
+            $eventStore->storeEvent(new ADayPassed(new \DateTimeImmutable('now')));
+        })->dailyAt('23:00');
     }
 
     /**
@@ -34,8 +34,7 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
-    {
+    protected function commands() {
         require base_path('routes/console.php');
     }
 }

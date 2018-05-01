@@ -1,11 +1,6 @@
 <?php namespace spec\OrderFulfillment\LatePaymentReminders;
 
-use OrderFulfillment\Money\Currency;
-use OrderFulfillment\Money\Money;
-use OrderFulfillment\OrderProcessing\OrderId;
-use PhpSpec\ObjectBehavior;
-
-class InvoiceBecameOverdueSpec extends ObjectBehavior {
+class InvoiceBecameExtremelyOverdueSpec {
 
     private $orderId = 'order id';
     private $becameOverdueAt = '2017-01-01 23:21:23';
