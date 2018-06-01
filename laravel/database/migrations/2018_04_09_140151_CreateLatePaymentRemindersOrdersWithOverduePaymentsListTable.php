@@ -12,10 +12,10 @@ class CreateLatePaymentRemindersOrdersWithOverduePaymentsListTable extends Migra
             $t->increments('id');
             $t->string('order_id');
             $t->dateTime('ordered_at');
-            $t->boolean('is_overdue');
-            $t->dateTime('became_overdue_at');
-            $t->boolean('is_extremely_overdue');
-            $t->dateTime('became_extremely_overdue_at');
+            $t->boolean('is_overdue')->default(0);
+            $t->dateTime('became_overdue_at')->nullable();
+            $t->boolean('is_extremely_overdue')->default(0);
+            $t->dateTime('became_extremely_overdue_at')->nullable();
         });
     }
 
